@@ -1,6 +1,6 @@
 # TmDB-Inshorts
 
-MoviesApp built with MVVM + Retrofit + Offline Functinality
+App built with MVVM + Retrofit + Offline Functinality
 
 Get your API KEY FROM TMDB's website. This App includes:
 
