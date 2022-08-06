@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.example.tmdb_isnhorts">
+
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+
+    <application
+        android:allowBackup="true"
+        android:dataExtractionRules="@xml/data_extraction_rules"
+        android:fullBackupContent="@xml/backup_rules"
+        android:icon="@drawable/inshorts_logo"
+        android:label="@string/app_name"
+        android:roundIcon="@drawable/inshorts_logo"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.TmDBisnhorts"
+        tools:targetApi="31">
+
+        <activity android:name=".View.FavMovieDetail" android:parentActivityName=".View.FavoriteActivity"></activity>
+        <activity android:name=".View.AboutActivity" android:parentActivityName=".View.MainActivity"/>
+        <activity android:name=".View.FavoriteActivity" android:parentActivityName=".View.MainActivity" />
+        <activity android:name=".View.MovieActivity" android:parentActivityName=".View.MainActivity" />
+        <activity android:name=".View.MainActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+    </application>
+
+</manifest>

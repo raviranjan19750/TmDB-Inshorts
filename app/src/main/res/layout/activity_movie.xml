@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:bind="http://schemas.android.com/apk/res/android">
+
+
+
+    <data>
+
+        <variable
+            name="result"
+            type="com.example.tmdb_isnhorts.Result" />
+
+    </data>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true">
+        <LinearLayout
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            xmlns:tools="http://schemas.android.com/tools"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            tools:context=".View.MovieActivity">
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="600dp"
+                app:cardUseCompatPadding="true"
+                app:cardCornerRadius="8dp"
+                app:cardElevation="10dp">
+
+
+                <ImageView
+                    android:id="@+id/moviePosterImageView"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    bind:posterPath="@{result.posterPath}"
+                    android:scaleType="fitXY" />
+
+
+                <ImageView
+                    android:id="@+id/favButtonImageView"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:src="@drawable/heart"
+                    android:layout_marginRight="20dp"
+                    android:layout_marginBottom="10dp"
+                    android:layout_gravity="right|bottom"/>
+
+            </androidx.cardview.widget.CardView>
+
+
+
+            <TextView
+                android:id="@+id/movieNameTextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:textColor="@color/black"
+                android:textStyle="bold"
+                android:layout_marginTop="4dp"
+                android:text="@{result.originalTitle}"
+                android:textSize="20sp"/>
+
+
+
+
+            <TextView
+                android:id="@+id/movieOverViewTextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@{result.overview}"
+                android:textColor="@color/black"
+               android:layout_marginHorizontal="12dp"
+                android:layout_marginTop="12dp"
+                android:textSize="18sp"/>
+
+
+
+        </LinearLayout>
+    </ScrollView>
+
+
+
+
+</layout>
+
+
+

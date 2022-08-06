@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:bind="http://schemas.android.com/apk/res/android">
+
+    <data>
+
+        <variable
+            name="favorites"
+            type="com.example.tmdb_isnhorts.Favorites" />
+
+    </data>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true">
+
+        <LinearLayout
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            xmlns:tools="http://schemas.android.com/tools"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            tools:context=".View.FavMovieDetail">
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="600dp"
+                app:cardUseCompatPadding="true"
+                app:cardCornerRadius="8dp"
+                app:cardElevation="10dp">
+
+
+                <ImageView
+                    android:id="@+id/favMoviePosterImageView"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    bind:posterPath="@{favorites.posterPath}"
+                    android:scaleType="fitXY"
+                  />
+            </androidx.cardview.widget.CardView>
+
+
+
+
+            <TextView
+                android:id="@+id/favMovieNameTextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:textColor="@color/black"
+                android:textStyle="bold"
+                android:layout_gravity="bottom"
+                android:layout_marginTop="4dp"
+                android:text="@{favorites.originalTitle}"
+                android:textSize="20sp"/>
+
+            <TextView
+                android:id="@+id/favMovieOverViewTextView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@{favorites.overview}"
+                android:textColor="@color/black"
+                android:layout_gravity="bottom"
+          android:layout_marginHorizontal="12dp"
+                android:layout_marginTop="12dp"
+                android:textSize="18sp"/>
+
+
+
+
+        </LinearLayout>
+
+    </ScrollView>
+
+
+
+
+</layout>
+
+
+
