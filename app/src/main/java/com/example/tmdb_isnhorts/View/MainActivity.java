@@ -60,6 +60,8 @@ public class MainActivity extends AppCompatActivity {
         movieViewModel = new ViewModelProvider(this).get(MovieViewModel.class);
 
         swipeRefreshLayout = findViewById(R.id.swipeRefreshLayout);
+        searchEditText = activityMainBinding.searchEditText;
+        searchButton = activityMainBinding.searchButton;
 
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -71,20 +73,32 @@ public class MainActivity extends AppCompatActivity {
 
                 if (networkInfo!=null) {
 
-
+                    searchEditText.setText("");
                     getPopularMovies();
+                    swipeRefreshLayout.setRefreshing(false);
 
                 } else {
 
+                    searchEditText.setText("");
                     getDatabaseMovies();
+                    swipeRefreshLayout.setRefreshing(false);
 
                 }
                 swipeRefreshLayout.setRefreshing(false);
             }
         });
 
-        searchEditText = activityMainBinding.searchEditText;
-        searchButton = activityMainBinding.searchButton;
+        ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(CONNECTIVITY_SERVICE);
+        NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
+
+        if (networkInfo!=null) {
+
+            getPopularMovies();
+
+        } else {
+
+            getDatabaseMovies();
+        }
 
         searchButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -106,13 +120,13 @@ public class MainActivity extends AppCompatActivity {
             public void onChanged(List<Result> results) {
                 offlinemovies = (ArrayList<Result>) results;
 
-                showOfflineShit();
+                showOfflineData();
 
             }
         });
     }
 
-    private void showOfflineShit() {
+    private void showOfflineData() {
 
         favouriteMovieRecyclerView = activityMainBinding.popularMovieRecyclerView;
 
