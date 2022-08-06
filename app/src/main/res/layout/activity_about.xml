@@ -3,11 +3,11 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:background="#032541"
-    android:orientation="vertical"
-    android:layout_gravity="center"
-    android:gravity="center"
     android:layout_height="match_parent"
+    android:layout_gravity="center"
+    android:background="#032541"
+    android:gravity="center"
+    android:orientation="vertical"
     tools:context=".View.AboutActivity">
 
 
@@ -30,6 +30,7 @@
         android:textColor="@color/white" />
 
     <LinearLayout
+        android:id="@+id/githubLinkLinearLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
@@ -39,27 +40,33 @@
             android:id="@+id/githubImageView"
             android:layout_width="48dp"
             android:layout_height="48dp"
-            android:src="@drawable/github"
-            android:layout_marginTop="20dp"
-            android:layout_marginBottom="20dp"
             android:layout_marginLeft="20dp"
+            android:layout_marginTop="20dp"
             android:layout_marginRight="15dp"
+            android:layout_marginBottom="20dp"
+            android:src="@drawable/github"
             app:tint="@color/white" />
 
         <TextView
             android:id="@+id/githubUserNameTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginRight="15dp"
             android:layout_marginTop="20dp"
+            android:layout_marginRight="15dp"
             android:layout_marginBottom="20dp"
-            android:textColor="@color/white"
-            android:text="raviranjan19750"/>
+            android:text="raviranjan19750/TmDB-Inshorts"
+            android:textColor="@color/white" />
 
 
-</LinearLayout>
+    </LinearLayout>
 
-
+    <TextView
+        android:id="@+id/clickTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4sp"
+        android:text="Click above link to open"
+        android:textColor="@color/white" />
 
 
 
