@@ -179,6 +179,8 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onRefresh() {
 
+                searchView.setQuery("", false);
+                searchView.clearFocus();
                 fetchMoviesData();
                 swipeRefreshLayout.setRefreshing(false);
             }
