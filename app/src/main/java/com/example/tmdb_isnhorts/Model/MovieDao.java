@@ -16,8 +16,6 @@ import java.util.List;
 @Dao
 public interface MovieDao {
 
-
-
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void addMovies(Result result);
 

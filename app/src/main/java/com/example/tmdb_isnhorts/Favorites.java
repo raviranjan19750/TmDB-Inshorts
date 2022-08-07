@@ -9,6 +9,7 @@ import androidx.databinding.BaseObservable;
 import androidx.databinding.Bindable;
 import androidx.databinding.BindingAdapter;
 import androidx.room.Entity;
+import androidx.room.Index;
 import androidx.room.PrimaryKey;
 
 import com.bumptech.glide.Glide;
@@ -20,10 +21,11 @@ import com.google.gson.annotations.SerializedName;
 public class Favorites extends BaseObservable implements Parcelable {
 
 
-    @PrimaryKey(autoGenerate = true)
     @SerializedName("vote_count")
     @Expose
     private Integer voteCount;
+
+    @PrimaryKey(autoGenerate = true)
     @SerializedName("id")
     @Expose
     private Integer id;
