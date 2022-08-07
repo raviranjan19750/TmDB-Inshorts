@@ -56,7 +56,7 @@ public class MovieActivity extends AppCompatActivity {
         }
 
 
-        favorites = new Favorites(posterpath, titleofmovie, overrivew, rating);
+
 
         favButtonImageView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -105,6 +105,8 @@ public class MovieActivity extends AppCompatActivity {
         if(aboutMovieResponse != null && aboutMovieResponse.getTitle() != null) {
             getSupportActionBar().setTitle(aboutMovieResponse.getTitle().toString());
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+            favorites = new Favorites(aboutMovieResponse.getPosterPath(), aboutMovieResponse.getTitle(), aboutMovieResponse.getOverview(), aboutMovieResponse.getVoteAverage());
         }
 
 

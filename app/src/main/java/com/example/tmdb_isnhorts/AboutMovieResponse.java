@@ -1,5 +1,6 @@
 package com.example.tmdb_isnhorts;
 
+import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 public class AboutMovieResponse {
@@ -12,6 +13,9 @@ public class AboutMovieResponse {
 
     @SerializedName("title")
     private String title;
+
+    @SerializedName("vote_average")
+    private Double voteAverage;
 
 
     public String getOverview() {
@@ -36,6 +40,14 @@ public class AboutMovieResponse {
 
     public void setTitle(String title) {
         this.title = title;
+    }
+
+    public Double getVoteAverage() {
+        return voteAverage;
+    }
+
+    public void setVoteAverage(Double voteAverage) {
+        this.voteAverage = voteAverage;
     }
 
     @Override

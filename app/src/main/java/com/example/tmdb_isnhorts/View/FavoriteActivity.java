@@ -2,6 +2,8 @@ package com.example.tmdb_isnhorts.View;
 
 import android.content.res.Configuration;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.LinearLayout;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
@@ -28,6 +30,7 @@ public class FavoriteActivity extends AppCompatActivity {
     RecyclerView recyclerView;
     ArrayList<Favorites> favoritesArrayList = new ArrayList<>();
     ActivityFavoriteBinding favoriteBinding;
+    LinearLayout emptyStateLinearLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +45,9 @@ public class FavoriteActivity extends AppCompatActivity {
         viewModel = new ViewModelProvider(this).get(MovieViewModel.class);
 
         favoriteBinding = DataBindingUtil.setContentView(this, R.layout.activity_favorite);
+
+        emptyStateLinearLayout = favoriteBinding.emptyStateLinearLayout;
+
 
 
         viewModel.getFavFromDb().observe(this, new Observer<List<Favorites>>() {
@@ -67,14 +73,18 @@ public class FavoriteActivity extends AppCompatActivity {
             recyclerView.setLayoutManager(new GridLayoutManager(this, 3));
         } else {
 
-
             recyclerView.setLayoutManager(new GridLayoutManager(this, 4));
-
 
         }
 
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setAdapter(mAdapter);
         mAdapter.notifyDataSetChanged();
+
+        if(favoritesArrayList != null && favoritesArrayList.size() == 0) {
+            emptyStateLinearLayout.setVisibility(View.VISIBLE);
+        }else{
+            emptyStateLinearLayout.setVisibility(View.GONE);
+        }
     }
 }

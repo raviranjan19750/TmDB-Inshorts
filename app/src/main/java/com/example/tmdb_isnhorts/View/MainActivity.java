@@ -16,6 +16,7 @@ import android.view.SearchEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -70,6 +71,7 @@ public class MainActivity extends AppCompatActivity {
     SwipeRefreshLayout swipeRefreshLayout;
     SearchView searchView;
     ConnectivityManager connectivityManager;
+    LinearLayout emptyStateLinearLayout;
 
     private CompositeDisposable disposables = new CompositeDisposable();
 
@@ -89,7 +91,6 @@ public class MainActivity extends AppCompatActivity {
             Intent intent = new Intent(this, MovieActivity.class);
             intent.putExtra("id", params.get(0));
             startActivity(intent);
-            Toast.makeText(this, "yayeee", Toast.LENGTH_LONG).show();
 
         }
         connectivityManager = (ConnectivityManager) getSystemService(CONNECTIVITY_SERVICE);
@@ -99,6 +100,7 @@ public class MainActivity extends AppCompatActivity {
 
         swipeRefreshLayout = findViewById(R.id.swipeRefreshLayout);
         searchView = findViewById(R.id.searchView);
+        emptyStateLinearLayout = findViewById(R.id.emptyStateLinearLayout);
 
 
         popularMovieRecyclerView = activityMainBinding.popularMovieRecyclerView;
@@ -133,7 +135,7 @@ public class MainActivity extends AppCompatActivity {
                         });
                     }
                 })
-                .debounce(2000, TimeUnit.MILLISECONDS) // Apply Debounce() operator to limit requests
+                .debounce(1000, TimeUnit.MILLISECONDS) // Apply Debounce() operator to limit requests
                 .subscribeOn(Schedulers.io());
 
         // Subscribe an Observer
@@ -224,6 +226,7 @@ public class MainActivity extends AppCompatActivity {
 
         popularMovieRecyclerView = activityMainBinding.popularMovieRecyclerView;
         popularMoviesLinearLayout.setVisibility(View.VISIBLE);
+        searchView.setVisibility(View.GONE);
         nowPlayingMoviesLinearLayout.setVisibility(View.GONE);
         searchedMoviesLinearLayout.setVisibility(View.GONE);
 
@@ -243,6 +246,12 @@ public class MainActivity extends AppCompatActivity {
         popularMovieRecyclerView.setItemAnimator(new DefaultItemAnimator());
         popularMovieRecyclerView.setAdapter(movieAdapter);
         movieAdapter.notifyDataSetChanged();
+
+        if(offlinemovies != null && offlinemovies.size() == 0) {
+            emptyStateLinearLayout.setVisibility(View.VISIBLE);
+        }else{
+            emptyStateLinearLayout.setVisibility(View.GONE);
+        }
 
     }
 
@@ -297,7 +306,9 @@ public class MainActivity extends AppCompatActivity {
     private void showPopularMoviesLinearLayout() {
 
         popularMoviesLinearLayout.setVisibility(View.VISIBLE);
+        searchView.setVisibility(View.VISIBLE);
         searchedMoviesLinearLayout.setVisibility(View.GONE);
+        emptyStateLinearLayout.setVisibility(View.GONE);
 
         popularMoviesTextView = activityMainBinding.popularMoviesTextView;
         popularMoviesTextView.setText("Popular Movies");
