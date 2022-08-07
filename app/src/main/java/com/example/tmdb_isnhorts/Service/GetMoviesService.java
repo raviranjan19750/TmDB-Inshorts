@@ -17,5 +17,5 @@ public interface GetMoviesService {
     Call<Info> getSearchedMovies(@Query("api_key")String api_key, @Query("query") String query);
 
     @GET("movie/now_playing")
-    Call<Info> getNowPlayingMovies(@Query("api_key")String api_key, @Query("query") String query);
+    Call<Info> getNowPlayingMovies(@Query("api_key")String api_key);
 }

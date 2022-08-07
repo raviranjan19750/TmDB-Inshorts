@@ -25,13 +25,18 @@ public class MovieViewModel extends AndroidViewModel {
 
     }
 
-    public MutableLiveData<List<Result>> getMoviesFromAPI(){
+    public LiveData<List<Result>> getMoviesFromAPI(){
         return repository.GetMutableMovies();
 
     }
 
     public MutableLiveData<List<Result>> getSearchedMoviesFromAPI(String searchedQuery){
         return repository.GetSearchedMutableMovies(searchedQuery);
+
+    }
+
+    public MutableLiveData<List<Result>> getNowPlayingMoviesFromAPI(){
+        return repository.GetNowPlayingMutableMovies();
 
     }
 

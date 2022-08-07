@@ -20,48 +20,47 @@
         android:layout_height="wrap_content"
         app:cardUseCompatPadding="true"
         app:cardCornerRadius="8dp"
-        app:cardBackgroundColor="#1A1A1A"
         app:cardElevation="8dp">
-
-
-        <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="200dp"
-            android:scaleType="fitStart"
-            android:layout_gravity="center"
-            android:foregroundGravity="center"
-            android:layout_marginBottom="8dp"
-            android:background="@drawable/rounded"
-            bind:posterPath="@{fav.posterPath}"/>
-
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginVertical="8dp"
-            android:layout_gravity="bottom|center"
-            android:gravity="center">
+            android:orientation="vertical">
+
 
             <ImageView
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:src="@drawable/star"/>
+                android:layout_width="match_parent"
+                android:layout_height="160dp"
+                android:scaleType="fitXY"
+                android:background="@drawable/rounded"
+                bind:posterPath="@{fav.posterPath}"/>
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="16sp"
-                android:layout_marginLeft="8dp"
-                android:layout_marginStart="8dp"
-                android:textColor="@color/white"
-                android:text="@{fav.voteAverage.toString()}"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="36dp"
+                android:orientation="horizontal"
+                android:background="#1A1A1A"
+                android:layout_gravity="bottom|center"
+                android:gravity="center">
+
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:src="@drawable/star"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="16sp"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginStart="8dp"
+                    android:textColor="@color/white"
+                    android:text="@{fav.voteAverage.toString()}"/>
+
+            </LinearLayout>
+
         </LinearLayout>
-
-
-
-
-
 
     </androidx.cardview.widget.CardView>
 

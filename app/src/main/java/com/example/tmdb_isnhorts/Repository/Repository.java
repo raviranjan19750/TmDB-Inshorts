@@ -1,7 +1,11 @@
 package com.example.tmdb_isnhorts.Repository;
 
 import android.app.Application;
+import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.AsyncTask;
+import android.util.Log;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
@@ -44,6 +48,7 @@ public class Repository {
 
     }
 
+
     public  MutableLiveData<List<Result>> GetMutableMovies () {
 
 
@@ -60,6 +65,7 @@ public class Repository {
 
                 if (info!=null && info.getResults()!=null) {
 
+                    resultArrayList.clear();
                     resultArrayList = (ArrayList<Result>) info.getResults();
                     getMutableLiveData.setValue(resultArrayList);
 
@@ -108,9 +114,41 @@ public class Repository {
         return getMutableLiveData;
     }
 
+    public  MutableLiveData<List<Result>> GetNowPlayingMutableMovies () {
+
+
+        GetMoviesService getMoviesService = RetrofitInstance.getMoviesService();
+        Call<Info> call = getMoviesService.getNowPlayingMovies(application.getApplicationContext().
+                getString(R.string.api_key));
+
+
+        call.enqueue(new Callback<Info>() {
+            @Override
+            public void onResponse(Call<Info> call, Response<Info> response) {
+
+                Info info = response.body();
+
+                if (info!=null && info.getResults()!=null) {
+
+                    resultArrayList = (ArrayList<Result>) info.getResults();
+                    getMutableLiveData.setValue(resultArrayList);
+
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<Info> call, Throwable t) {
+
+            }
+        });
+
+        return getMutableLiveData;
+    }
 
     public LiveData<List<Result>> getMoviesfromDB() {
 
+        Log.i("TAG", "onChanged Movie: inside  " );
        return movieDao.getDbmovies();
     }
 
@@ -124,8 +162,6 @@ public class Repository {
         new AddMoviesAsync(movieDao).execute(result);
 
     }
-
-
 
     public static class AddMoviesAsync extends AsyncTask<Result, Void, Void> {
 

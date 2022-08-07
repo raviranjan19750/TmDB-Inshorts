@@ -7,55 +7,127 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-
-    <LinearLayout
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        tools:context=".View.MainActivity">
-
-        <LinearLayout
+        <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
-            android:layout_height="56dp"
-            android:orientation="horizontal"
-            android:layout_marginHorizontal="16dp">
+            android:layout_height="match_parent">
 
-            <EditText
-                android:id="@+id/searchEditText"
-                android:layout_width="0dp"
-                android:layout_height="56dp"
-                android:layout_weight="1"
-                android:layout_marginHorizontal="16dp"
-                android:hint="Search movies..."
-                android:textColor="@color/black"
-                android:textSize="16sp"/>
-
-            <Button
-                android:id="@+id/searchButton"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="16sp"
-                android:text="search"
-                android:paddingHorizontal="12dp"
-                android:paddingVertical="6dp"/>
+                android:orientation="vertical"
+                tools:context=".View.MainActivity">
 
-        </LinearLayout>
+                <androidx.appcompat.widget.SearchView
+                    android:layout_width="match_parent"
+                    android:layout_height="?attr/actionBarSize"
+                    android:background="#032541"
+                    android:layout_marginHorizontal="16dp"
+                    android:backgroundTint="@color/white"
+                    android:id="@+id/searchView">
 
-
-
-
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:padding="10dp"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:id="@+id/popularMovieRecyclerView"/>
+                </androidx.appcompat.widget.SearchView>
 
 
 
-    </LinearLayout>
+                <LinearLayout
+                    android:id="@+id/popularMoviesLinearLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/popularMoviesTextView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Popular Movies"
+                        android:textSize="18sp"
+                        android:textColor="@color/black"
+                        android:textStyle="bold"
+                        android:layout_marginTop="16dp"
+                        android:layout_marginHorizontal="16dp"/>
+
+                    <View
+                        android:background="#032541"
+                        android:layout_width = "fill_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginTop="4dp"
+                        android:alpha="0.1"
+                        android:layout_marginHorizontal="16dp" />
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/popularMovieRecyclerView"
+                        android:paddingHorizontal="16dp"
+                        android:paddingTop="8dp"
+                        android:nestedScrollingEnabled="false"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/nowPlayingMoviesLinearLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Trending Movies"
+                        android:textSize="18sp"
+                        android:textColor="@color/black"
+                        android:textStyle="bold"
+                        android:layout_marginHorizontal="16dp"
+                        android:layout_marginTop="16dp"/>
+
+                    <View
+                        android:background="#032541"
+                        android:layout_width = "fill_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginTop="4dp"
+                        android:alpha="0.1"
+                        android:layout_marginHorizontal="16dp" />
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/nowPlayingMovieRecyclerView"
+                        android:paddingHorizontal="16dp"
+                        android:paddingTop="8dp"
+                        android:nestedScrollingEnabled="false"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/searchedMoviesLinearLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:visibility="gone"
+                    android:orientation="vertical">
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/searchedMovieRecyclerView"
+                        android:padding="16dp"
+                        android:nestedScrollingEnabled="false"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+
+
+                </LinearLayout>
+
+
+
+
+
+
+            </LinearLayout>
+
+        </androidx.core.widget.NestedScrollView>
+
+
 
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
