@@ -10,7 +10,7 @@
 
     <item
         android:id="@+id/favActivity"
-        android:title="Favorite Movies"
+        android:title="Favourite Movies"
         app:showAsAction="never"/>
 
 </menu>

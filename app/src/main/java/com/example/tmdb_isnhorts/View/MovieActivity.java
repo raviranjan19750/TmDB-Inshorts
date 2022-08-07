@@ -64,7 +64,7 @@ public class MovieActivity extends AppCompatActivity {
 
 
                 movieViewModel.adddFav(favorites);
-                Toast.makeText(MovieActivity.this, "Added to Favorites", Toast.LENGTH_SHORT).show();
+                Toast.makeText(MovieActivity.this, "Added to Favourites", Toast.LENGTH_SHORT).show();
                 Intent newintent = new Intent(MovieActivity.this, com.example.tmdb_isnhorts.View.FavoriteActivity.class);
                 startActivity(newintent);
             }
