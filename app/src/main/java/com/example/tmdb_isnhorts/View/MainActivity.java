@@ -135,7 +135,7 @@ public class MainActivity extends AppCompatActivity {
                         });
                     }
                 })
-                .debounce(1000, TimeUnit.MILLISECONDS) // Apply Debounce() operator to limit requests
+                .debounce(800, TimeUnit.MILLISECONDS) // Apply Debounce() operator to limit requests
                 .subscribeOn(Schedulers.io());
 
         // Subscribe an Observer
