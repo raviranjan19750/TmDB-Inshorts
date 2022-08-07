@@ -219,6 +219,10 @@ public class Repository {
 
     }
 
+    public void deleteFav() {
+        new DeleteFav(favDao).execute();
+    }
+
 
     public static class AddFav extends AsyncTask<Favorites, Void, Void> {
 
@@ -232,6 +236,22 @@ public class Repository {
         protected Void doInBackground(Favorites... favorites) {
 
             favdao.addFavorite(favorites[0]);
+            return null;
+        }
+    }
+
+    public static class DeleteFav extends AsyncTask<Favorites, Void, Void> {
+
+        FavMovie favdao;
+
+        public DeleteFav(FavMovie favdao) {
+            this.favdao = favdao;
+        }
+
+        @Override
+        protected Void doInBackground(Favorites... favorites) {
+
+            favdao.deleteAllFromTable();
             return null;
         }
     }

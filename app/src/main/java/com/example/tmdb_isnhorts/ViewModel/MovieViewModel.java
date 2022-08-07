@@ -61,4 +61,8 @@ public class MovieViewModel extends AndroidViewModel {
     public LiveData<List<Favorites>> getFavFromDb() {
         return repository.getFav();
     }
+
+    public void deleteAllFavoritesMovies() {
+        repository.deleteFav();
+    }
 }

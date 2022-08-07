@@ -19,4 +19,7 @@ public interface FavMovie {
 
     @Query("select * from favmovies")
     public LiveData<List<Favorites>> getFavMovies();
+
+    @Query("DELETE FROM favmovies")
+    void deleteAllFromTable();
 }
