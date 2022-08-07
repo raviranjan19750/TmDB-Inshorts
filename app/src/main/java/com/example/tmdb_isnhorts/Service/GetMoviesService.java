@@ -1,9 +1,11 @@
 package com.example.tmdb_isnhorts.Service;
 
+import com.example.tmdb_isnhorts.AboutMovieResponse;
 import com.example.tmdb_isnhorts.Model.Info;
 
 import retrofit2.Call;
 import retrofit2.http.GET;
+import retrofit2.http.Path;
 import retrofit2.http.Query;
 
 public interface GetMoviesService {
@@ -18,4 +20,7 @@ public interface GetMoviesService {
 
     @GET("movie/now_playing")
     Call<Info> getNowPlayingMovies(@Query("api_key")String api_key);
+
+    @GET("movie/{id}")
+    Call<AboutMovieResponse> getMovieById(@Path("id") String id, @Query("api_key")String api_key);
 }

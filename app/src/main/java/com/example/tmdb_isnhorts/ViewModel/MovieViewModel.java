@@ -7,6 +7,7 @@ import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
+import com.example.tmdb_isnhorts.AboutMovieResponse;
 import com.example.tmdb_isnhorts.Favorites;
 import com.example.tmdb_isnhorts.Repository.Repository;
 import com.example.tmdb_isnhorts.Result;
@@ -37,6 +38,11 @@ public class MovieViewModel extends AndroidViewModel {
 
     public MutableLiveData<List<Result>> getNowPlayingMoviesFromAPI(){
         return repository.GetNowPlayingMutableMovies();
+
+    }
+
+    public MutableLiveData<AboutMovieResponse> getMutableMovieById(String id){
+        return repository.GetMutableMovieById(id);
 
     }
 

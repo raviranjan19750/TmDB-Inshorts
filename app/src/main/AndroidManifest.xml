@@ -19,15 +19,31 @@
         tools:targetApi="31">
 
         <activity android:name=".View.FavMovieDetail" android:parentActivityName=".View.FavoriteActivity"></activity>
+
         <activity android:name=".View.AboutActivity" android:parentActivityName=".View.MainActivity"/>
+
+
         <activity android:name=".View.FavoriteActivity" android:parentActivityName=".View.MainActivity" />
         <activity android:name=".View.MovieActivity" android:parentActivityName=".View.MainActivity" />
+
         <activity android:name=".View.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+
+            <intent-filter>
+                <!--below line is to set the action to our intent to view-->
+                <action android:name="android.intent.action.VIEW" />
+                <!--on below line we are adding a default category to our intent-->
+                <category android:name="android.intent.category.DEFAULT" />
+                <!--on below line we are adding a category to make our app browsable-->
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data
+                    android:host="www.tmdbinshorts.com"
+                    android:scheme="https" />
             </intent-filter>
         </activity>
     </application>

@@ -5,12 +5,11 @@
     xmlns:bind="http://schemas.android.com/apk/res/android">
 
 
-
     <data>
 
         <variable
-            name="result"
-            type="com.example.tmdb_isnhorts.Result" />
+            name="aboutMovieResponse"
+            type="com.example.tmdb_isnhorts.AboutMovieResponse" />
 
     </data>
 
@@ -18,8 +17,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:fillViewport="true">
-        <LinearLayout
-            xmlns:app="http://schemas.android.com/apk/res-auto"
+
+        <LinearLayout xmlns:app="http://schemas.android.com/apk/res-auto"
             xmlns:tools="http://schemas.android.com/tools"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -29,16 +28,16 @@
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="600dp"
-                app:cardUseCompatPadding="true"
                 app:cardCornerRadius="8dp"
-                app:cardElevation="10dp">
+                app:cardElevation="10dp"
+                app:cardUseCompatPadding="true">
 
 
                 <ImageView
                     android:id="@+id/moviePosterImageView"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    bind:posterPath="@{result.posterPath}"
+                    bind:posterPath="@{aboutMovieResponse.posterPath}"
                     android:scaleType="fitXY" />
 
 
@@ -46,45 +45,50 @@
                     android:id="@+id/favButtonImageView"
                     android:layout_width="30dp"
                     android:layout_height="30dp"
-                    android:src="@drawable/heart"
-                    android:layout_marginRight="20dp"
+                    android:layout_gravity="right|top"
                     android:layout_marginTop="10dp"
-                    android:layout_gravity="right|top"/>
+                    android:layout_marginRight="20dp"
+                    android:src="@drawable/heart" />
+
+
+                <ImageView
+                    android:id="@+id/shareButtonImageView"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_gravity="bottom|right"
+                    android:layout_marginRight="20dp"
+                    android:layout_marginBottom="10dp"
+                    android:elevation="8dp"
+                    android:src="@drawable/share" />
 
             </androidx.cardview.widget.CardView>
-
 
 
             <TextView
                 android:id="@+id/movieNameTextView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center"
-                android:textColor="@color/black"
-                android:textStyle="bold"
                 android:layout_marginTop="4dp"
-                android:text="@{result.originalTitle}"
-                android:textSize="20sp"/>
-
-
+                android:gravity="center"
+                android:text="@{aboutMovieResponse.title}"
+                android:textColor="@color/black"
+                android:textSize="20sp"
+                android:textStyle="bold" />
 
 
             <TextView
                 android:id="@+id/movieOverViewTextView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@{result.overview}"
-                android:textColor="@color/black"
-               android:layout_marginHorizontal="12dp"
+                android:layout_marginHorizontal="12dp"
                 android:layout_marginVertical="12dp"
-                android:textSize="16sp"/>
-
+                android:text="@{aboutMovieResponse.overview}"
+                android:textColor="@color/black"
+                android:textSize="16sp" />
 
 
         </LinearLayout>
     </ScrollView>
-
-
 
 
 </layout>

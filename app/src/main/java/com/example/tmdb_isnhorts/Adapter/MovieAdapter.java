@@ -75,7 +75,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MyHolder> {
 
 
                         Intent intent = new Intent(context, MovieActivity.class);
-                        intent.putExtra("movieresult", result);
+                        intent.putExtra("id", result.getId().toString());
                         context.startActivity(intent);
 
 

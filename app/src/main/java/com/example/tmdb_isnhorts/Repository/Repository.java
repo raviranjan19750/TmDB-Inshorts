@@ -10,6 +10,7 @@ import android.util.Log;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
+import com.example.tmdb_isnhorts.AboutMovieResponse;
 import com.example.tmdb_isnhorts.FavoriteMovies.FavMovie;
 import com.example.tmdb_isnhorts.FavoriteMovies.FavoriteDatabase;
 import com.example.tmdb_isnhorts.Favorites;
@@ -32,7 +33,9 @@ import retrofit2.Response;
 public class Repository {
 
     ArrayList<Result> resultArrayList = new ArrayList<>();
+    AboutMovieResponse aboutMovieResponse;
     MutableLiveData<List<Result>> getMutableLiveData = new MutableLiveData<>();
+    MutableLiveData<AboutMovieResponse> getMutableMovieData = new MutableLiveData<>();
     MovieDao movieDao;
     FavMovie favDao;
     Application application;
@@ -48,8 +51,7 @@ public class Repository {
 
     }
 
-
-    public  MutableLiveData<List<Result>> GetMutableMovies () {
+    public MutableLiveData<List<Result>> GetMutableMovies() {
 
 
         GetMoviesService getMoviesService = RetrofitInstance.getMoviesService();
@@ -63,7 +65,7 @@ public class Repository {
 
                 Info info = response.body();
 
-                if (info!=null && info.getResults()!=null) {
+                if (info != null && info.getResults() != null) {
 
                     resultArrayList.clear();
                     resultArrayList = (ArrayList<Result>) info.getResults();
@@ -75,14 +77,14 @@ public class Repository {
 
             @Override
             public void onFailure(Call<Info> call, Throwable t) {
-
+                Log.i("TAG", "GetMutableMovies onFailure: " + t.getMessage());
             }
         });
 
         return getMutableLiveData;
     }
 
-    public  MutableLiveData<List<Result>> GetSearchedMutableMovies (String searchedQuery) {
+    public MutableLiveData<List<Result>> GetSearchedMutableMovies(String searchedQuery) {
 
 
         GetMoviesService getMoviesService = RetrofitInstance.getMoviesService();
@@ -96,7 +98,7 @@ public class Repository {
 
                 Info info = response.body();
 
-                if (info!=null && info.getResults()!=null) {
+                if (info != null && info.getResults() != null) {
 
                     resultArrayList = (ArrayList<Result>) info.getResults();
                     getMutableLiveData.setValue(resultArrayList);
@@ -107,14 +109,14 @@ public class Repository {
 
             @Override
             public void onFailure(Call<Info> call, Throwable t) {
-
+                Log.i("TAG", "GetSearchedMutableMovies onFailure: " + t.getMessage());
             }
         });
 
         return getMutableLiveData;
     }
 
-    public  MutableLiveData<List<Result>> GetNowPlayingMutableMovies () {
+    public MutableLiveData<List<Result>> GetNowPlayingMutableMovies() {
 
 
         GetMoviesService getMoviesService = RetrofitInstance.getMoviesService();
@@ -128,7 +130,7 @@ public class Repository {
 
                 Info info = response.body();
 
-                if (info!=null && info.getResults()!=null) {
+                if (info != null && info.getResults() != null) {
 
                     resultArrayList = (ArrayList<Result>) info.getResults();
                     getMutableLiveData.setValue(resultArrayList);
@@ -139,17 +141,48 @@ public class Repository {
 
             @Override
             public void onFailure(Call<Info> call, Throwable t) {
-
+                Log.i("TAG", "GetNowPlayingMutableMovies onFailure: " + t.getMessage());
             }
         });
 
         return getMutableLiveData;
     }
 
-    public LiveData<List<Result>> getMoviesfromDB() {
+    public MutableLiveData<AboutMovieResponse> GetMutableMovieById(String id) {
 
-        Log.i("TAG", "onChanged Movie: inside  " );
-       return movieDao.getDbmovies();
+
+        GetMoviesService getMoviesService = RetrofitInstance.getMoviesService();
+        Call<AboutMovieResponse> call = getMoviesService.getMovieById(id, application.getApplicationContext().
+                getString(R.string.api_key));
+
+        call.enqueue(new Callback<AboutMovieResponse>() {
+            @Override
+            public void onResponse(Call<AboutMovieResponse> call, Response<AboutMovieResponse> response) {
+
+                AboutMovieResponse info = response.body();
+
+                if (info != null) {
+
+                    aboutMovieResponse = info;
+                    getMutableMovieData.setValue(aboutMovieResponse);
+
+                }
+            }
+
+            @Override
+            public void onFailure(Call<AboutMovieResponse> call, Throwable t) {
+
+                Log.i("TAG", "GetMutableMovieById onFailure: " + t.getMessage());
+
+            }
+        });
+
+
+        return getMutableMovieData;
+    }
+
+    public LiveData<List<Result>> getMoviesfromDB() {
+        return movieDao.getDbmovies();
     }
 
     public LiveData<List<Favorites>> getFav() {
@@ -185,7 +218,6 @@ public class Repository {
         new AddFav(favDao).execute(favorites);
 
     }
-
 
 
     public static class AddFav extends AsyncTask<Favorites, Void, Void> {

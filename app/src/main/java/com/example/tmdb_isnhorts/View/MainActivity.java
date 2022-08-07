@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.content.res.Configuration;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -55,7 +56,7 @@ public class MainActivity extends AppCompatActivity {
 
     ActivityMainBinding activityMainBinding;
     MovieViewModel movieViewModel;
-    ArrayList<Result> resultArrayList = new ArrayList<>();
+    ArrayList<Result> popularMovieArrayList = new ArrayList<>();
     ArrayList<Result> nowPlayingMovieArrayList = new ArrayList<>();
     ArrayList<Result> searchedMovieArrayList = new ArrayList<>();
     ArrayList<Result> offlinemovies = new ArrayList<>();
@@ -71,7 +72,6 @@ public class MainActivity extends AppCompatActivity {
     ConnectivityManager connectivityManager;
 
     private CompositeDisposable disposables = new CompositeDisposable();
-    private long timeSinceLastRequest; // for log printouts only. Not part of logic.
 
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
@@ -80,6 +80,18 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        Uri uri = getIntent().getData();
+
+        if(uri != null) {
+
+            List<String> params = uri.getPathSegments();
+
+            Intent intent = new Intent(this, MovieActivity.class);
+            intent.putExtra("id", params.get(0));
+            startActivity(intent);
+            Toast.makeText(this, "yayeee", Toast.LENGTH_LONG).show();
+
+        }
         connectivityManager = (ConnectivityManager) getSystemService(CONNECTIVITY_SERVICE);
 
         activityMainBinding = DataBindingUtil.setContentView(this, R.layout.activity_main);
@@ -97,8 +109,6 @@ public class MainActivity extends AppCompatActivity {
 
         searchedMovieRecyclerView = activityMainBinding.searchedMovieRecyclerView;
         searchedMoviesLinearLayout = activityMainBinding.searchedMoviesLinearLayout;
-
-        timeSinceLastRequest = System.currentTimeMillis();
 
 
         Observable<String> observableQueryText = Observable
@@ -123,7 +133,7 @@ public class MainActivity extends AppCompatActivity {
                         });
                     }
                 })
-                .debounce(3000, TimeUnit.MILLISECONDS) // Apply Debounce() operator to limit requests
+                .debounce(2000, TimeUnit.MILLISECONDS) // Apply Debounce() operator to limit requests
                 .subscribeOn(Schedulers.io());
 
         // Subscribe an Observer
@@ -135,12 +145,7 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onNext(@io.reactivex.rxjava3.annotations.NonNull String s) {
-                Log.d(TAG, "onNext: time  since last request: " + (System.currentTimeMillis() - timeSinceLastRequest));
-                Log.d(TAG, "onNext: search query: " + s);
-                timeSinceLastRequest = System.currentTimeMillis();
 
-
-                // method for sending a request to the server
                 Handler handler = new Handler(Looper.getMainLooper());
                 handler.post(new Runnable() {
                     public void run() {
@@ -181,9 +186,10 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    public NetworkInfo getNetWorkInfo() {
+    private NetworkInfo getNetWorkInfo() {
          return connectivityManager.getActiveNetworkInfo();
     }
+
     private void fetchMoviesData() {
 
         if (getNetWorkInfo()!=null) {
@@ -203,7 +209,6 @@ public class MainActivity extends AppCompatActivity {
         movieViewModel.getMoviesfromDB().observe(this, new Observer<List<Result>>() {
             @Override
             public void onChanged(List<Result> results) {
-                Log.i("TAG", "onChanged: inside getDatabaseMovies ");
                 offlinemovies = (ArrayList<Result>) results;
 
                 if(getNetWorkInfo() == null) {
@@ -217,7 +222,6 @@ public class MainActivity extends AppCompatActivity {
 
     private void showOfflineData() {
 
-        Log.i("TAG", "onChanged: inside showOfflineData ");
         popularMovieRecyclerView = activityMainBinding.popularMovieRecyclerView;
         popularMoviesLinearLayout.setVisibility(View.VISIBLE);
         nowPlayingMoviesLinearLayout.setVisibility(View.GONE);
@@ -244,52 +248,38 @@ public class MainActivity extends AppCompatActivity {
 
     private void getPopularMovies() {
 
-        Log.i("TAG", "onChanged: inside getPopularMovies ");
         movieViewModel.getMoviesFromAPI().observe(this, new Observer<List<Result>>() {
             @Override
             public void onChanged(List<Result> results) {
 
-                resultArrayList = (ArrayList<Result>) results;
-                Log.i("TAG", "onChanged: inside getPopularMovies size  " + resultArrayList.size());
-                for (Result rs : resultArrayList) {
+                popularMovieArrayList = (ArrayList<Result>) results;
+                for (Result rs : popularMovieArrayList) {
 
                     movieViewModel.addMoviesinDb(rs);
 
                 }
 
-                Log.i("TAG", "onChanged: getPopularMovies " + resultArrayList);
                 showPopularMoviesLinearLayout();
 
             }
         });
-        Log.i("TAG", "onChanged: outside getPopularMovies ");
     }
 
     private void getNowPlayingMovies() {
 
-        Log.i("TAG", "onChanged: inside getNowPlayingMovies ");
         movieViewModel.getNowPlayingMoviesFromAPI().observe(this, new Observer<List<Result>>() {
             @Override
             public void onChanged(List<Result> results) {
 
                 nowPlayingMovieArrayList = (ArrayList<Result>) results;
-                for (Result rs : nowPlayingMovieArrayList) {
 
-                    //movieViewModel.addMoviesinDb(rs);
-
-                }
-
-                Log.i("TAG", "onChanged: getNowPlayingMovies " + nowPlayingMovieArrayList);
                 showNowPlayingMoviesLinearLayout();
 
             }
         });
-        Log.i("TAG", "onChanged: outside getNowPlayingMovies ");
     }
 
     private void getSearchedMovies(String searchQuery) {
-
-        Log.i("TAG", "onChanged: inside getSearchedMovies ");
 
         movieViewModel.getSearchedMoviesFromAPI(searchQuery).observe(this, new Observer<List<Result>>() {
             @Override
@@ -297,13 +287,10 @@ public class MainActivity extends AppCompatActivity {
 
                 searchedMovieArrayList = (ArrayList<Result>) results;
 
-                Log.i("TAG", "onChanged: seacrh result " + searchedMovieArrayList);
                 showSearchedMoviesLinearLayout();
 
             }
         });
-
-        Log.i("TAG", "onChanged: outside getSearchedMovies ");
 
     }
 
@@ -315,7 +302,7 @@ public class MainActivity extends AppCompatActivity {
         popularMoviesTextView = activityMainBinding.popularMoviesTextView;
         popularMoviesTextView.setText("Popular Movies");
 
-        movieAdapter = new MovieAdapter(this, resultArrayList);
+        movieAdapter = new MovieAdapter(this, popularMovieArrayList);
 
         if (this.getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
             popularMovieRecyclerView.setLayoutManager(new GridLayoutManager(this, 3));
@@ -394,5 +381,11 @@ public class MainActivity extends AppCompatActivity {
 
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        disposables.clear(); // clear disposables
     }
 }
