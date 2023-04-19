@@ -1,4 +1,4 @@
-# TmDB-Inshorts
+# TmDB
 
 Apk Link : https://drive.google.com/drive/folders/1qogyLXXfNHczuHmzackmWQkH87LOWM5f?usp=sharing
 
